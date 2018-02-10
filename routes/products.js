@@ -28,13 +28,15 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.put("/:id", async (req, res, next) => {
-  const product = await Product.findOne({ _id: req.params.id });
+  let product;
+
+  product = await Product.findOne({ _id: req.params.id });
 
   if (!product) {
     return res.status(404).json({ error: "El producto no existe." });
   }
 
-  const product = await Product.findOneAndUpdate(
+  product = await Product.findOneAndUpdate(
     { _id: req.params.id },
     { $set: req.body },
     { new: true, runValidators: true, context: 'query' }
